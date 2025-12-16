@@ -1,31 +1,47 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { BaseCrudService } from '@/integrations';
-import { BlogPosts } from '@/entities';
-import { Image } from '@/components/ui/image';
+// Removed BaseCrudService
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { Link } from 'react-router-dom';
 import { Calendar, User } from 'lucide-react';
 import { format } from 'date-fns';
 
 export default function BlogPage() {
-  const [posts, setPosts] = useState<BlogPosts[]>([]);
-  const [loading, setLoading] = useState(true);
+  // Static Mock Data for Blog Posts
+  const posts = [
+    {
+      _id: '1',
+      title: 'The Future of AI in Education',
+      author: 'Zain Admin',
+      publicationDate: new Date().toISOString(),
+      content: 'Artificial Intelligence is reshaping how we learn and teach. From personalized learning paths to automated grading...',
+      thumbnailImage: 'https://static.wixstatic.com/media/9e0878_c7f4d149e322450fb044673a43eca177~mv2.png',
+      isPublished: true,
+      slug: 'future-of-ai'
+    },
+    {
+      _id: '2',
+      title: 'Why Cybersecurity Matters',
+      author: 'Security Team',
+      publicationDate: new Date(Date.now() - 86400000).toISOString(),
+      content: 'In an era of increasing digital threats, securing your infrastructure is not just an option, it is a necessity...',
+      thumbnailImage: 'https://static.wixstatic.com/media/9e0878_8e438bd835f24dfd9247e6d2b1ad4fd8~mv2.png',
+      isPublished: true,
+      slug: 'cybersecurity-matters'
+    },
+    {
+      _id: '3',
+      title: 'Top Web Dev Frameworks 2025',
+      author: 'Dev Team',
+      publicationDate: new Date(Date.now() - 172800000).toISOString(),
+      content: 'A comprehensive look at the most popular frameworks defining the modern web, from Astro to React 19...',
+      thumbnailImage: 'https://static.wixstatic.com/media/9e0878_951163f626434b1e8fb2fab421df5b17~mv2.png',
+      isPublished: true,
+      slug: 'web-dev-frameworks'
+    }
+  ];
 
-  useEffect(() => {
-    loadPosts();
-  }, []);
-
-  const loadPosts = async () => {
-    const { items } = await BaseCrudService.getAll<BlogPosts>('blogposts');
-    const publishedPosts = items.filter(p => p.isPublished).sort((a, b) => {
-      const dateA = a.publicationDate ? new Date(a.publicationDate).getTime() : 0;
-      const dateB = b.publicationDate ? new Date(b.publicationDate).getTime() : 0;
-      return dateB - dateA;
-    });
-    setPosts(publishedPosts);
-    setLoading(false);
-  };
+  const loading = false; // No loading needed
 
   if (loading) {
     return (
@@ -77,11 +93,10 @@ export default function BlogPage() {
               >
                 {post.thumbnailImage && (
                   <div className="relative h-48 overflow-hidden">
-                    <Image
+                    <img
                       src={post.thumbnailImage}
                       alt={post.title || 'Blog post'}
                       className="w-full h-full object-cover"
-                      width={400}
                     />
                   </div>
                 )}
@@ -111,7 +126,7 @@ export default function BlogPage() {
                     </p>
                   )}
                   <Link
-                    to={`/blog/${post.slug || post._id}`}
+                    to="#"
                     className="text-neon-cyan font-paragraph text-sm hover:text-neon-cyan/80 transition-colors duration-300 inline-flex items-center gap-2"
                   >
                     Read More →
