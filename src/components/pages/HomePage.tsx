@@ -1,7 +1,6 @@
-// HPI 1.6-G FIXED (No Wix Dependency)
+// HPI 1.7-FINAL (Safe Links - No Router Crash)
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useMotionValue, useMotionTemplate } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import { 
   ArrowRight, 
   Zap, 
@@ -53,17 +52,17 @@ const AnimatedReveal: React.FC<{ children: React.ReactNode; className?: string; 
 };
 
 const NeonButton: React.FC<{ to: string; variant?: 'cyan' | 'green'; children: React.ReactNode }> = ({ to, variant = 'cyan', children }) => {
-  const colorClass = variant === 'cyan' ? 'text-neon-cyan border-neon-cyan hover:bg-neon-cyan/10' : 'text-neon-green border-neon-green hover:bg-neon-green/10';
+  const colorClass = variant === 'cyan' ? 'text-cyan-400 border-cyan-400 hover:bg-cyan-400/10' : 'text-green-400 border-green-400 hover:bg-green-400/10';
   const shadowClass = variant === 'cyan' ? 'hover:shadow-[0_0_20px_rgba(0,255,255,0.4)]' : 'hover:shadow-[0_0_20px_rgba(57,255,20,0.4)]';
   
   return (
-    <Link 
-      to={to} 
-      className={`relative group overflow-hidden px-8 py-4 border ${colorClass} ${shadowClass} transition-all duration-300 font-heading font-bold uppercase tracking-wider inline-flex items-center gap-2`}
+    <a 
+      href={to} 
+      className={`relative group overflow-hidden px-8 py-4 border ${colorClass} ${shadowClass} transition-all duration-300 font-bold uppercase tracking-wider inline-flex items-center gap-2 rounded-none`}
     >
       <span className="relative z-10 flex items-center gap-2">{children}</span>
-      <div className={`absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-${variant === 'cyan' ? 'neon-cyan' : 'neon-green'}/10`} />
-    </Link>
+      <div className={`absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-${variant === 'cyan' ? 'cyan-400' : 'green-400'}/10`} />
+    </a>
   );
 };
 
@@ -71,8 +70,8 @@ const GlitchText: React.FC<{ text: string; className?: string }> = ({ text, clas
   return (
     <div className={`relative inline-block group ${className}`}>
       <span className="relative z-10">{text}</span>
-      <span className="absolute top-0 left-0 -z-10 w-full h-full text-neon-cyan opacity-0 group-hover:opacity-70 group-hover:translate-x-[2px] transition-all duration-100 select-none">{text}</span>
-      <span className="absolute top-0 left-0 -z-10 w-full h-full text-neon-green opacity-0 group-hover:opacity-70 group-hover:-translate-x-[2px] transition-all duration-100 select-none">{text}</span>
+      <span className="absolute top-0 left-0 -z-10 w-full h-full text-cyan-400 opacity-0 group-hover:opacity-70 group-hover:translate-x-[2px] transition-all duration-100 select-none">{text}</span>
+      <span className="absolute top-0 left-0 -z-10 w-full h-full text-green-400 opacity-0 group-hover:opacity-70 group-hover:-translate-x-[2px] transition-all duration-100 select-none">{text}</span>
     </div>
   );
 };
@@ -135,7 +134,7 @@ export default function HomePage() {
             </motion.div>
 
             <motion.h1 
-              className="font-heading text-6xl md:text-8xl lg:text-9xl font-bold leading-[0.9] tracking-tighter text-white mb-8"
+              className="text-6xl md:text-8xl lg:text-9xl font-bold leading-[0.9] tracking-tighter text-white mb-8"
               initial={{ opacity: 0, y: 100 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -145,7 +144,7 @@ export default function HomePage() {
             </motion.h1>
 
             <motion.p 
-              className="font-paragraph text-lg md:text-xl text-white/60 max-w-2xl mb-12 leading-relaxed border-l-2 border-green-400/50 pl-6"
+              className="text-lg md:text-xl text-white/60 max-w-2xl mb-12 leading-relaxed border-l-2 border-green-400/50 pl-6"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -222,7 +221,7 @@ export default function HomePage() {
 
         <div className="mb-24 md:pl-12">
           <AnimatedReveal>
-            <h2 className="font-heading text-5xl md:text-7xl font-bold text-white mb-6">
+            <h2 className="text-5xl md:text-7xl font-bold text-white mb-6">
               CORE <span className="text-green-400">MODULES</span>
             </h2>
             <p className="text-white/60 max-w-xl text-lg">
@@ -280,7 +279,7 @@ export default function HomePage() {
                 <div className="absolute -inset-2 border border-dashed border-white/20 rounded-full animate-[spin_10s_linear_infinite] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
 
-              <h3 className="font-heading text-2xl text-white mb-4 group-hover:translate-x-2 transition-transform duration-300">
+              <h3 className="text-2xl font-bold text-white mb-4 group-hover:translate-x-2 transition-transform duration-300">
                 <GlitchText text={feature.title} />
               </h3>
               <p className="text-white/50 leading-relaxed group-hover:text-white/70 transition-colors duration-300">
@@ -307,7 +306,7 @@ export default function HomePage() {
                     <span className="text-green-400 font-mono text-sm tracking-widest uppercase">Our Vision</span>
                   </div>
                   
-                  <h2 className="font-heading text-5xl md:text-7xl font-bold text-white mb-12 leading-tight">
+                  <h2 className="text-5xl md:text-7xl font-bold text-white mb-12 leading-tight">
                     EMPOWERING <br />
                     THE <span className="text-cyan-400 italic">NEXT GEN</span>
                   </h2>
@@ -316,23 +315,23 @@ export default function HomePage() {
                     <div className="flex gap-6 group">
                       <div className="w-px h-auto bg-white/20 group-hover:bg-cyan-400 transition-colors duration-300" />
                       <div>
-                        <h4 className="text-white font-heading text-xl mb-2">Strategic Innovation</h4>
+                        <h4 className="text-white text-xl font-bold mb-2">Strategic Innovation</h4>
                         <p className="text-white/60">We don't just build software; we engineer digital ecosystems that drive business evolution.</p>
                       </div>
                     </div>
                     <div className="flex gap-6 group">
                       <div className="w-px h-auto bg-white/20 group-hover:bg-cyan-400 transition-colors duration-300" />
                       <div>
-                        <h4 className="text-white font-heading text-xl mb-2">Knowledge Transfer</h4>
+                        <h4 className="text-white text-xl font-bold mb-2">Knowledge Transfer</h4>
                         <p className="text-white/60">Through our Academy, we democratize access to elite technical education.</p>
                       </div>
                     </div>
                   </div>
 
                   <div className="mt-12">
-                    <Link to="/about" className="text-white hover:text-cyan-400 transition-colors duration-300 inline-flex items-center gap-2 border-b border-white/20 hover:border-cyan-400 pb-1">
+                    <a href="/about" className="text-white hover:text-cyan-400 transition-colors duration-300 inline-flex items-center gap-2 border-b border-white/20 hover:border-cyan-400 pb-1">
                       Read Full Manifesto <ChevronRight className="w-4 h-4" />
-                    </Link>
+                    </a>
                   </div>
                 </AnimatedReveal>
               </div>
@@ -407,7 +406,7 @@ export default function HomePage() {
                 Now Enrolling
               </div>
               
-              <h2 className="font-heading text-5xl md:text-6xl font-bold text-white mb-8">
+              <h2 className="text-5xl md:text-6xl font-bold text-white mb-8">
                 MASTER THE <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-500">DIGITAL CRAFT</span>
               </h2>
@@ -420,12 +419,12 @@ export default function HomePage() {
                 <NeonButton to="/academy" variant="green">
                   Start Learning
                 </NeonButton>
-                <Link 
-                  to="/register" 
-                  className="px-8 py-4 text-white border border-white/20 hover:bg-white/5 transition-all duration-300 font-heading font-bold uppercase tracking-wider inline-flex items-center gap-2"
+                <a 
+                  href="/register" 
+                  className="px-8 py-4 text-white border border-white/20 hover:bg-white/5 transition-all duration-300 font-bold uppercase tracking-wider inline-flex items-center gap-2"
                 >
                   Create Account
-                </Link>
+                </a>
               </div>
             </div>
 
@@ -459,7 +458,7 @@ export default function HomePage() {
         
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <AnimatedReveal>
-            <h2 className="font-heading text-5xl md:text-7xl font-bold text-white mb-8">
+            <h2 className="text-5xl md:text-7xl font-bold text-white mb-8">
               READY TO <span className="text-cyan-400">TRANSFORM?</span>
             </h2>
             <p className="text-white/60 text-xl mb-12 max-w-2xl mx-auto">
