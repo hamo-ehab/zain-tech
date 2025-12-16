@@ -1,7 +1,7 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
-import cloudProviderFetchAdapter from "@wix/cloud-provider-fetch-adapter";
+import vercel from "@astrojs/vercel/serverless";
 import wix from "@wix/astro";
 import monitoring from "@wix/monitoring-astro";
 import react from "@astrojs/react";
@@ -14,6 +14,7 @@ const isBuild = process.env.NODE_ENV == "production";
 // https://astro.build/config
 export default defineConfig({
   output: "server",
+  adapter: vercel(),
   integrations: [
     {
       name: "framewire",
@@ -24,7 +25,7 @@ export default defineConfig({
               "page",
               `const version = new URLSearchParams(location.search).get('framewire');
               if (version){
-                const localUrl = 'http://localhost:3202/framewire/index.mjs';
+                const localUrl = 'http://localhost:3202/framewire/index.mjs'\;
                 const cdnUrl = \`https://static.parastorage.com/services/framewire/\${version}/index.mjs\`;
                 const url = version === 'local' ? localUrl : cdnUrl;
                 const framewireModule = await import(url);
@@ -50,7 +51,6 @@ export default defineConfig({
       customErrorOverlayPlugin(),
     ],
   },
-  adapter: isBuild ? cloudProviderFetchAdapter({}) : undefined,
   devToolbar: {
     enabled: false,
   },
