@@ -1,24 +1,42 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { BaseCrudService } from '@/integrations';
-import { Services } from '@/entities';
-import { Image } from '@/components/ui/image';
+// Removed BaseCrudService to stop infinite loading
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { Link } from 'react-router-dom';
 
 export default function ServicesPage() {
-  const [services, setServices] = useState<Services[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    loadServices();
-  }, []);
-
-  const loadServices = async () => {
-    const { items } = await BaseCrudService.getAll<Services>('services');
-    setServices(items.filter(s => s.isAvailable));
-    setLoading(false);
-  };
+  // Static data to replace Wix fetching
+  const [services, setServices] = useState([
+    {
+      _id: '1',
+      serviceName: 'Web Development',
+      shortDescription: 'Build modern, high-performance websites.',
+      description: 'Full-stack web solutions tailored to your business needs using the latest technologies like React, Next.js, and Astro.',
+      price: 'Starting at ',
+      thumbnail: 'https://static.wixstatic.com/media/9e0878_c7f4d149e322450fb044673a43eca177~mv2.png', // Example image from your site
+      isAvailable: true
+    },
+    {
+      _id: '2',
+      serviceName: 'Cybersecurity Audit',
+      shortDescription: 'Secure your digital infrastructure.',
+      description: 'Comprehensive security analysis, penetration testing, and vulnerability assessment to protect your enterprise data.',
+      price: 'Starting at ',
+      thumbnail: 'https://static.wixstatic.com/media/9e0878_8e438bd835f24dfd9247e6d2b1ad4fd8~mv2.png',
+      isAvailable: true
+    },
+    {
+      _id: '3',
+      serviceName: 'Mobile App Dev',
+      shortDescription: 'Native and Cross-platform apps.',
+      description: 'Custom mobile applications for iOS and Android designed for user engagement and performance.',
+      price: 'Starting at ',
+      thumbnail: 'https://static.wixstatic.com/media/9e0878_951163f626434b1e8fb2fab421df5b17~mv2.png',
+      isAvailable: true
+    }
+  ]);
+  
+  const [loading, setLoading] = useState(false); // No loading needed anymore
 
   if (loading) {
     return (
@@ -70,11 +88,11 @@ export default function ServicesPage() {
               >
                 {service.thumbnail && (
                   <div className="relative h-48 overflow-hidden">
-                    <Image
+                    {/* Replaced generic Image component with standard img to prevent crashes */}
+                    <img
                       src={service.thumbnail}
                       alt={service.serviceName || 'Service'}
                       className="w-full h-full object-cover"
-                      width={400}
                     />
                   </div>
                 )}
@@ -94,10 +112,10 @@ export default function ServicesPage() {
                   )}
                   <div className="flex items-center justify-between mt-6">
                     <span className="font-heading text-2xl font-bold text-neon-cyan">
-                      ${service.price}
+                      {service.price}
                     </span>
                     <Link
-                      to="/dashboard"
+                      to="/contact"
                       className="bg-neon-cyan text-black font-paragraph text-sm px-6 py-2 rounded-lg hover:bg-neon-cyan/80 transition-all duration-300"
                     >
                       Book Now

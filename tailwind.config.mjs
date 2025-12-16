@@ -11,7 +11,7 @@ export default {
         foreground: '#ffffff',
       },
       fontFamily: {
-        heading: ['ui-sans-serif', 'system-ui', 'sans-serif'], // أو الخط اللي كنت مستخدمه
+        heading: ['ui-sans-serif', 'system-ui', 'sans-serif'], 
         paragraph: ['ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
       },
