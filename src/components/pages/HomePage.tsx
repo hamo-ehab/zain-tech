@@ -1,7 +1,7 @@
-// HPI 1.8-RESTORED (Original Design + Crash Fixes)
+// HPI 1.9-FINAL (Original Design + Safe Links + Native Images)
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useMotionValue, useMotionTemplate } from 'framer-motion';
-// Link removed to prevent Router crash, using <a> instead
+// Removed react-router-dom to prevent crash
 import { 
   ArrowRight, 
   Zap, 
@@ -53,6 +53,7 @@ const AnimatedReveal: React.FC<{ children: React.ReactNode; className?: string; 
 };
 
 const NeonButton: React.FC<{ to: string; variant?: 'cyan' | 'green'; children: React.ReactNode }> = ({ to, variant = 'cyan', children }) => {
+  // Keeping ORIGINAL class names exactly as they were
   const colorClass = variant === 'cyan' ? 'text-neon-cyan border-neon-cyan hover:bg-neon-cyan/10' : 'text-neon-green border-neon-green hover:bg-neon-green/10';
   const shadowClass = variant === 'cyan' ? 'hover:shadow-[0_0_20px_rgba(0,255,255,0.4)]' : 'hover:shadow-[0_0_20px_rgba(57,255,20,0.4)]';
   
