@@ -1,8 +1,8 @@
-import { MemberProvider } from '@/integrations';
+import { AuthProvider } from '@/data-services/AuthProvider'; // Changed import source
 import { createBrowserRouter, RouterProvider, Navigate, Outlet } from 'react-router-dom';
 import { ScrollToTop } from '@/lib/scroll-to-top';
 import { MemberProtectedRoute } from '@/components/ui/member-protected-route';
-import ErrorPage from '@/integrations/errorHandlers/ErrorPage';
+import CustomErrorPage from '@/data-services/errors-handling/CustomErrorPage'; // Changed import source and name
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    errorElement: <ErrorPage />,
+    errorElement: <CustomErrorPage />, // Changed ErrorPage name
     children: [
       {
         index: true,
@@ -148,8 +148,8 @@ const router = createBrowserRouter([
 
 export default function AppRouter() {
   return (
-    <MemberProvider>
+    <AuthProvider>
       <RouterProvider router={router} />
-    </MemberProvider>
+    </AuthProvider>
   );
 }
