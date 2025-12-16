@@ -1,6 +1,7 @@
-// HPI 1.7-FINAL (Safe Links - No Router Crash)
+// HPI 1.8-RESTORED (Original Design + Crash Fixes)
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useMotionValue, useMotionTemplate } from 'framer-motion';
+// Link removed to prevent Router crash, using <a> instead
 import { 
   ArrowRight, 
   Zap, 
@@ -52,16 +53,16 @@ const AnimatedReveal: React.FC<{ children: React.ReactNode; className?: string; 
 };
 
 const NeonButton: React.FC<{ to: string; variant?: 'cyan' | 'green'; children: React.ReactNode }> = ({ to, variant = 'cyan', children }) => {
-  const colorClass = variant === 'cyan' ? 'text-cyan-400 border-cyan-400 hover:bg-cyan-400/10' : 'text-green-400 border-green-400 hover:bg-green-400/10';
+  const colorClass = variant === 'cyan' ? 'text-neon-cyan border-neon-cyan hover:bg-neon-cyan/10' : 'text-neon-green border-neon-green hover:bg-neon-green/10';
   const shadowClass = variant === 'cyan' ? 'hover:shadow-[0_0_20px_rgba(0,255,255,0.4)]' : 'hover:shadow-[0_0_20px_rgba(57,255,20,0.4)]';
   
   return (
     <a 
       href={to} 
-      className={`relative group overflow-hidden px-8 py-4 border ${colorClass} ${shadowClass} transition-all duration-300 font-bold uppercase tracking-wider inline-flex items-center gap-2 rounded-none`}
+      className={`relative group overflow-hidden px-8 py-4 border ${colorClass} ${shadowClass} transition-all duration-300 font-heading font-bold uppercase tracking-wider inline-flex items-center gap-2`}
     >
       <span className="relative z-10 flex items-center gap-2">{children}</span>
-      <div className={`absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-${variant === 'cyan' ? 'cyan-400' : 'green-400'}/10`} />
+      <div className={`absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-${variant === 'cyan' ? 'neon-cyan' : 'neon-green'}/10`} />
     </a>
   );
 };
@@ -70,8 +71,8 @@ const GlitchText: React.FC<{ text: string; className?: string }> = ({ text, clas
   return (
     <div className={`relative inline-block group ${className}`}>
       <span className="relative z-10">{text}</span>
-      <span className="absolute top-0 left-0 -z-10 w-full h-full text-cyan-400 opacity-0 group-hover:opacity-70 group-hover:translate-x-[2px] transition-all duration-100 select-none">{text}</span>
-      <span className="absolute top-0 left-0 -z-10 w-full h-full text-green-400 opacity-0 group-hover:opacity-70 group-hover:-translate-x-[2px] transition-all duration-100 select-none">{text}</span>
+      <span className="absolute top-0 left-0 -z-10 w-full h-full text-neon-cyan opacity-0 group-hover:opacity-70 group-hover:translate-x-[2px] transition-all duration-100 select-none">{text}</span>
+      <span className="absolute top-0 left-0 -z-10 w-full h-full text-neon-green opacity-0 group-hover:opacity-70 group-hover:-translate-x-[2px] transition-all duration-100 select-none">{text}</span>
     </div>
   );
 };
@@ -99,7 +100,7 @@ export default function HomePage() {
   }
 
   return (
-    <div ref={containerRef} className="bg-black text-white min-h-screen overflow-clip selection:bg-cyan-400 selection:text-black font-sans">
+    <div ref={containerRef} className="bg-background text-foreground min-h-screen overflow-clip selection:bg-neon-cyan selection:text-black font-paragraph">
       
       {/* --- HERO SECTION --- */}
       <section 
@@ -129,22 +130,22 @@ export default function HomePage() {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="mb-6 flex items-center gap-4"
             >
-              <div className="h-px w-12 bg-cyan-400" />
-              <span className="text-cyan-400 font-mono text-sm tracking-[0.2em] uppercase">Welcome To</span>
+              <div className="h-px w-12 bg-neon-cyan" />
+              <span className="text-neon-cyan font-mono text-sm tracking-[0.2em] uppercase">Welcome To</span>
             </motion.div>
 
             <motion.h1 
-              className="text-6xl md:text-8xl lg:text-9xl font-bold leading-[0.9] tracking-tighter text-white mb-8"
+              className="font-heading text-6xl md:text-8xl lg:text-9xl font-bold leading-[0.9] tracking-tighter text-white mb-8"
               initial={{ opacity: 0, y: 100 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               ZAIN <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-green-400">TECH</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-green">TECH</span>
             </motion.h1>
 
             <motion.p 
-              className="text-lg md:text-xl text-white/60 max-w-2xl mb-12 leading-relaxed border-l-2 border-green-400/50 pl-6"
+              className="font-paragraph text-lg md:text-xl text-white/60 max-w-2xl mb-12 leading-relaxed border-l-2 border-neon-green/50 pl-6"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -179,10 +180,10 @@ export default function HomePage() {
               className="w-full h-full object-contain transition-all duration-700" 
             />
               {/* Decorative Corners */}
-              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-400" />
-              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-cyan-400" />
-              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-cyan-400" />
-              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-cyan-400" />
+              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-neon-cyan" />
+              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-neon-cyan" />
+              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-neon-cyan" />
+              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-neon-cyan" />
             </motion.div>
           </div>
         </div>
@@ -193,21 +194,21 @@ export default function HomePage() {
           className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         >
           <span className="text-[10px] uppercase tracking-widest text-white/40">Scroll to Explore</span>
-          <div className="w-px h-12 bg-gradient-to-b from-cyan-400 to-transparent" />
+          <div className="w-px h-12 bg-gradient-to-b from-neon-cyan to-transparent" />
         </motion.div>
       </section>
 
       {/* --- MARQUEE TICKER --- */}
-      <div className="w-full bg-cyan-400/5 border-y border-cyan-400/20 overflow-hidden py-4">
+      <div className="w-full bg-neon-cyan/5 border-y border-neon-cyan/20 overflow-hidden py-4">
         <motion.div 
           className="flex whitespace-nowrap gap-12 items-center"
           animate={{ x: ["0%", "-50%"] }}
           transition={{ repeat: Infinity, ease: "linear", duration: 20 }}
         >
           {[...Array(10)].map((_, i) => (
-            <div key={i} className="flex items-center gap-4 text-cyan-400/60 font-mono text-sm uppercase tracking-widest">
-              <Zap className="w-4 h-4" /> Innovate <span className="w-1 h-1 bg-cyan-400 rounded-full" /> 
-              <Shield className="w-4 h-4" /> Secure <span className="w-1 h-1 bg-cyan-400 rounded-full" /> 
+            <div key={i} className="flex items-center gap-4 text-neon-cyan/60 font-mono text-sm uppercase tracking-widest">
+              <Zap className="w-4 h-4" /> Innovate <span className="w-1 h-1 bg-neon-cyan rounded-full" /> 
+              <Shield className="w-4 h-4" /> Secure <span className="w-1 h-1 bg-neon-cyan rounded-full" /> 
               <Cpu className="w-4 h-4" /> Execute
             </div>
           ))}
@@ -221,8 +222,8 @@ export default function HomePage() {
 
         <div className="mb-24 md:pl-12">
           <AnimatedReveal>
-            <h2 className="text-5xl md:text-7xl font-bold text-white mb-6">
-              CORE <span className="text-green-400">MODULES</span>
+            <h2 className="font-heading text-5xl md:text-7xl font-bold text-white mb-6">
+              CORE <span className="text-neon-green">MODULES</span>
             </h2>
             <p className="text-white/60 max-w-xl text-lg">
               Deploying enterprise-grade infrastructure for the modern web.
@@ -274,19 +275,19 @@ export default function HomePage() {
               
               <div className="mb-8 relative">
                 <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                  <feature.icon className="w-8 h-8 text-cyan-400 group-hover:text-green-400 transition-colors duration-300" />
+                  <feature.icon className="w-8 h-8 text-neon-cyan group-hover:text-neon-green transition-colors duration-300" />
                 </div>
                 <div className="absolute -inset-2 border border-dashed border-white/20 rounded-full animate-[spin_10s_linear_infinite] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
 
-              <h3 className="text-2xl font-bold text-white mb-4 group-hover:translate-x-2 transition-transform duration-300">
+              <h3 className="font-heading text-2xl text-white mb-4 group-hover:translate-x-2 transition-transform duration-300">
                 <GlitchText text={feature.title} />
               </h3>
               <p className="text-white/50 leading-relaxed group-hover:text-white/70 transition-colors duration-300">
                 {feature.desc}
               </p>
 
-              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 to-green-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-neon-cyan to-neon-green transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
             </div>
           ))}
         </div>
@@ -302,34 +303,34 @@ export default function HomePage() {
               <div className="sticky top-32">
                 <AnimatedReveal>
                   <div className="flex items-center gap-4 mb-8">
-                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                    <span className="text-green-400 font-mono text-sm tracking-widest uppercase">Our Vision</span>
+                    <div className="w-2 h-2 bg-neon-green rounded-full animate-pulse" />
+                    <span className="text-neon-green font-mono text-sm tracking-widest uppercase">Our Vision</span>
                   </div>
                   
-                  <h2 className="text-5xl md:text-7xl font-bold text-white mb-12 leading-tight">
+                  <h2 className="font-heading text-5xl md:text-7xl font-bold text-white mb-12 leading-tight">
                     EMPOWERING <br />
-                    THE <span className="text-cyan-400 italic">NEXT GEN</span>
+                    THE <span className="text-neon-cyan italic">NEXT GEN</span>
                   </h2>
                   
                   <div className="space-y-8">
                     <div className="flex gap-6 group">
-                      <div className="w-px h-auto bg-white/20 group-hover:bg-cyan-400 transition-colors duration-300" />
+                      <div className="w-px h-auto bg-white/20 group-hover:bg-neon-cyan transition-colors duration-300" />
                       <div>
-                        <h4 className="text-white text-xl font-bold mb-2">Strategic Innovation</h4>
+                        <h4 className="text-white font-heading text-xl mb-2">Strategic Innovation</h4>
                         <p className="text-white/60">We don't just build software; we engineer digital ecosystems that drive business evolution.</p>
                       </div>
                     </div>
                     <div className="flex gap-6 group">
-                      <div className="w-px h-auto bg-white/20 group-hover:bg-cyan-400 transition-colors duration-300" />
+                      <div className="w-px h-auto bg-white/20 group-hover:bg-neon-cyan transition-colors duration-300" />
                       <div>
-                        <h4 className="text-white text-xl font-bold mb-2">Knowledge Transfer</h4>
+                        <h4 className="text-white font-heading text-xl mb-2">Knowledge Transfer</h4>
                         <p className="text-white/60">Through our Academy, we democratize access to elite technical education.</p>
                       </div>
                     </div>
                   </div>
 
                   <div className="mt-12">
-                    <a href="/about" className="text-white hover:text-cyan-400 transition-colors duration-300 inline-flex items-center gap-2 border-b border-white/20 hover:border-cyan-400 pb-1">
+                    <a href="/about" className="text-white hover:text-neon-cyan transition-colors duration-300 inline-flex items-center gap-2 border-b border-white/20 hover:border-neon-cyan pb-1">
                       Read Full Manifesto <ChevronRight className="w-4 h-4" />
                     </a>
                   </div>
@@ -339,7 +340,7 @@ export default function HomePage() {
 
             {/* Visual Side */}
             <div className="relative h-[800px] w-full">
-              <div className="absolute inset-0 bg-cyan-400/20 blur-[100px] opacity-20" />
+              <div className="absolute inset-0 bg-neon-cyan/20 blur-[100px] opacity-20" />
               
               <div className="relative h-full w-full grid grid-cols-2 gap-4">
                 <motion.div 
@@ -358,8 +359,8 @@ export default function HomePage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                     <div className="absolute bottom-4 left-4 text-white font-mono text-xs">IMG_REF_01</div>
                   </div>
-                  <div className="h-[30%] w-full bg-white/5 border border-white/10 p-6 flex flex-col justify-between group hover:border-cyan-400/50 transition-colors">
-                    <Code className="w-8 h-8 text-white/40 group-hover:text-cyan-400 transition-colors" />
+                  <div className="h-[30%] w-full bg-white/5 border border-white/10 p-6 flex flex-col justify-between group hover:border-neon-cyan/50 transition-colors">
+                    <Code className="w-8 h-8 text-white/40 group-hover:text-neon-cyan transition-colors" />
                     <div className="text-white/40 font-mono text-xs">CODE_BASE_ALPHA</div>
                   </div>
                 </motion.div>
@@ -371,9 +372,9 @@ export default function HomePage() {
                   transition={{ duration: 1, delay: 0.2 }}
                   viewport={{ once: true }}
                 >
-                  <div className="h-[30%] w-full bg-cyan-400/5 border border-cyan-400/20 p-6 flex flex-col justify-between group hover:bg-cyan-400/10 transition-colors">
-                    <Globe className="w-8 h-8 text-cyan-400" />
-                    <div className="text-cyan-400 font-mono text-xs">GLOBAL_CONNECT</div>
+                  <div className="h-[30%] w-full bg-neon-cyan/5 border border-neon-cyan/20 p-6 flex flex-col justify-between group hover:bg-neon-cyan/10 transition-colors">
+                    <Globe className="w-8 h-8 text-neon-cyan" />
+                    <div className="text-neon-cyan font-mono text-xs">GLOBAL_CONNECT</div>
                   </div>
                   <div className="h-[60%] w-full relative overflow-hidden border border-white/10 group">
                     <img 
@@ -396,19 +397,19 @@ export default function HomePage() {
       <section className="py-32 px-6 md:px-12 max-w-[120rem] mx-auto">
         <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-black">
           {/* Background Elements */}
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-green-400/10 blur-[150px] rounded-full pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-cyan-400/10 blur-[150px] rounded-full pointer-events-none" />
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-neon-green/10 blur-[150px] rounded-full pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-neon-cyan/10 blur-[150px] rounded-full pointer-events-none" />
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
             <div className="lg:col-span-7 p-12 md:p-24 flex flex-col justify-center relative z-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-green-400/30 bg-green-400/5 text-green-400 text-xs font-mono uppercase tracking-wider w-fit mb-8">
-                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neon-green/30 bg-neon-green/5 text-neon-green text-xs font-mono uppercase tracking-wider w-fit mb-8">
+                <span className="w-2 h-2 rounded-full bg-neon-green animate-pulse" />
                 Now Enrolling
               </div>
               
-              <h2 className="text-5xl md:text-6xl font-bold text-white mb-8">
+              <h2 className="font-heading text-5xl md:text-6xl font-bold text-white mb-8">
                 MASTER THE <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-500">DIGITAL CRAFT</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-green to-emerald-500">DIGITAL CRAFT</span>
               </h2>
               
               <p className="text-white/70 text-lg mb-12 max-w-xl">
@@ -421,7 +422,7 @@ export default function HomePage() {
                 </NeonButton>
                 <a 
                   href="/register" 
-                  className="px-8 py-4 text-white border border-white/20 hover:bg-white/5 transition-all duration-300 font-bold uppercase tracking-wider inline-flex items-center gap-2"
+                  className="px-8 py-4 text-white border border-white/20 hover:bg-white/5 transition-all duration-300 font-heading font-bold uppercase tracking-wider inline-flex items-center gap-2"
                 >
                   Create Account
                 </a>
@@ -438,13 +439,13 @@ export default function HomePage() {
               
               {/* Overlay Stats */}
               <div className="absolute bottom-8 left-8 right-8 grid grid-cols-2 gap-4">
-                <div className="bg-black/80 backdrop-blur-md border border-green-400/30 p-4">
+                <div className="bg-black/80 backdrop-blur-md border border-neon-green/30 p-4">
                   <div className="text-2xl font-bold text-white font-heading">50+</div>
-                  <div className="text-xs text-green-400 font-mono uppercase">Courses</div>
+                  <div className="text-xs text-neon-green font-mono uppercase">Courses</div>
                 </div>
-                <div className="bg-black/80 backdrop-blur-md border border-green-400/30 p-4">
+                <div className="bg-black/80 backdrop-blur-md border border-neon-green/30 p-4">
                   <div className="text-2xl font-bold text-white font-heading">10k+</div>
-                  <div className="text-xs text-green-400 font-mono uppercase">Students</div>
+                  <div className="text-xs text-neon-green font-mono uppercase">Students</div>
                 </div>
               </div>
             </div>
@@ -458,8 +459,8 @@ export default function HomePage() {
         
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <AnimatedReveal>
-            <h2 className="text-5xl md:text-7xl font-bold text-white mb-8">
-              READY TO <span className="text-cyan-400">TRANSFORM?</span>
+            <h2 className="font-heading text-5xl md:text-7xl font-bold text-white mb-8">
+              READY TO <span className="text-neon-cyan">TRANSFORM?</span>
             </h2>
             <p className="text-white/60 text-xl mb-12 max-w-2xl mx-auto">
               Whether you need enterprise solutions or advanced training, Zain Tech is your gateway to the future.
@@ -470,7 +471,7 @@ export default function HomePage() {
                 Initiate Contact
               </NeonButton>
               <div className="text-white/40 font-mono text-sm">
-                OR CALL: <span className="text-white hover:text-cyan-400 transition-colors cursor-pointer">+201148352628</span>
+                OR CALL: <span className="text-white hover:text-neon-cyan transition-colors cursor-pointer">+201148352628</span>
               </div>
             </div>
           </AnimatedReveal>
@@ -478,7 +479,7 @@ export default function HomePage() {
       </section>
 
       {/* --- DECORATIVE FOOTER LINE --- */}
-      <div className="h-2 w-full bg-gradient-to-r from-cyan-400 via-black to-green-400" />
+      <div className="h-2 w-full bg-gradient-to-r from-neon-cyan via-black to-neon-green" />
     </div>
   );
 }
