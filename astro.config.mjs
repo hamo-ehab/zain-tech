@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
-import vercel from '@astrojs/vercel'; // Changed import style
+import vercel from '@astrojs/vercel'; // استخدمنا اسم الحزمة مباشرة
 import { fileURLToPath } from 'url';
 import path from 'path';
 
@@ -11,13 +11,13 @@ const __dirname = path.dirname(__filename);
 export default defineConfig({
   output: 'server',
   adapter: vercel({
-    edge: false, // assuming serverless is the target
+    edge: false, // تحديد نوع الـ deployment
   }),
   integrations: [react()],
   vite: {
     resolve: {
       alias: {
-        // Define the alias: '@' should point to the 'src' directory
+        // تعريف Alias الصحيح
         '@': path.resolve(__dirname, './src'),
       },
     },
