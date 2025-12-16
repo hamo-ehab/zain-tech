@@ -33,3 +33,4 @@ The platform utilizes **Vitest** for automated testing to ensure system stabilit
 ```bash
 npm run test:run# zain-tech
 # zain-tech
+Fixed Adapter
